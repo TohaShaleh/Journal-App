@@ -3,10 +3,7 @@ package com.example.journalApp.Controller;
 import com.example.journalApp.Model.JournalEntry;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/journal")
@@ -34,18 +31,19 @@ public class JournalEntryController {
 
       }
 
-      @DeleteMapping("/id/{delId}")
+      @DeleteMapping("/id/{delId}")    // We can do this also by @GetMapping .. but this is the Standard Way to handle http req.
       public String delEntryById(@PathVariable long delId)
       {
           journalEntries.remove(delId);
           return "Deleted the Entry with id : "+delId;
       }
 
-//      @PutMapping("/id/{updateId}")
-//      public String updateEntryById(@PathVariable long updateId)
-//      {
-//          journalEntries.put(updateId,)
-//      }
+      @PutMapping("/id/{updateId}")
+      public String updateEntryById(@PathVariable long updateId, @RequestBody JournalEntry objEntry)
+      {
+          journalEntries.put(updateId,objEntry);  // It will override all values of an Entry in updateId
+          return "Updated the values in Entry with Id : "+updateId;
+      }
 
 
 }
