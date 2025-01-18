@@ -5,6 +5,7 @@ import com.example.journalApp.repository.JournalRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JournalService {
@@ -21,5 +22,25 @@ public class JournalService {
 
     public Journal createJournal(Journal journal) {
         return journalRepository.save(journal);
+    }
+
+    public Journal updateJournal(Long id, Journal updatedJournal) {
+        Optional<Journal> existingJournal = journalRepository.findById(id);
+        if (existingJournal.isPresent()) {
+            Journal journal = existingJournal.get();
+            journal.setTitle(updatedJournal.getTitle());
+            journal.setContent(updatedJournal.getContent());
+            return journalRepository.save(journal);
+        } else {
+            throw new RuntimeException("Journal entry not found with ID: " + id);
+        }
+    }
+
+    public void deleteJournal(Long id) {
+        if (journalRepository.existsById(id)) {
+            journalRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Journal entry not found with ID: " + id);
+        }
     }
 }

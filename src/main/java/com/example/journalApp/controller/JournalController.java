@@ -25,4 +25,15 @@ public class JournalController {
     public Journal createJournal(@RequestBody Journal journal) {
         return journalService.createJournal(journal);
     }
+
+    @PutMapping("/{id}")
+    public Journal updateJournal(@PathVariable Long id, @RequestBody Journal updatedJournal) {
+        return journalService.updateJournal(id, updatedJournal);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteJournal(@PathVariable Long id) {
+        journalService.deleteJournal(id);
+        return "Journal entry deleted successfully!";
+    }
 }
