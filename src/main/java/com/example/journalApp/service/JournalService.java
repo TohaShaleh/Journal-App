@@ -20,6 +20,15 @@ public class JournalService {
         return journalRepository.findAll();
     }
 
+    public Journal getJournalById(Long id) {
+        return journalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Journal entry not found with ID: " + id));
+    }
+
+    public List<Journal> searchJournalsByTitle(String title) {
+        return journalRepository.findByTitleContainingIgnoreCase(title);
+    }
+
     public Journal createJournal(Journal journal) {
         return journalRepository.save(journal);
     }

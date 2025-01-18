@@ -21,6 +21,16 @@ public class JournalController {
         return journalService.getAllJournals();
     }
 
+    @GetMapping("/{id}")
+    public Journal getJournalById(@PathVariable Long id) {
+        return journalService.getJournalById(id);
+    }
+
+    @GetMapping("/search")
+    public List<Journal> searchJournalsByTitle(@RequestParam String title) {
+        return journalService.searchJournalsByTitle(title);
+    }
+
     @PostMapping
     public Journal createJournal(@RequestBody Journal journal) {
         return journalService.createJournal(journal);
